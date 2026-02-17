@@ -8,6 +8,7 @@ export default function LoveLetterProfessional() {
     const [open, setOpen] = useState(false);
     const [showText, setShowText] = useState(false);
     const [displayed, setDisplayed] = useState("");
+    const [isMobile, setIsMobile] = useState(false);
 
     const message =
         "Three years of fire and fights, but you're still the only person I want to come home to. Happy 3rd anniversary nanna ❤️♾️.";
@@ -20,6 +21,17 @@ export default function LoveLetterProfessional() {
     ];
 
     // Envelope opens only on click, not automatically
+
+    // Check if device is mobile
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     useEffect(() => {
         if (!open) return;
@@ -37,6 +49,22 @@ export default function LoveLetterProfessional() {
         }, 28);
         return () => clearInterval(interval);
     }, [showText]);
+
+    // Show desktop-only message on mobile
+    if (isMobile) {
+        return (
+            <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-rose-100 via-pink-100 to-neutral-100 p-6">
+                <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md text-center">
+                    <div className="text-6xl mb-6">💻</div>
+                    <h2 className="text-2xl font-bold text-rose-500 mb-4">Desktop Required</h2>
+                    <p className="text-gray-600 leading-relaxed">
+                        This special anniversary experience is designed for desktop viewing only. 
+                        Please open this page on a desktop or laptop computer to view the full interactive love letter.
+                    </p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-rose-100 via-pink-100 to-neutral-100 relative overflow-hidden">
