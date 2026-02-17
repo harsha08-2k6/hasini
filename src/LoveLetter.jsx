@@ -19,10 +19,7 @@ export default function LoveLetterProfessional() {
         "/images/photo4.jpg",
     ];
 
-    useEffect(() => {
-        const t = setTimeout(() => setOpen(true), 1000);
-        return () => clearTimeout(t);
-    }, []);
+    // Envelope opens only on click, not automatically
 
     useEffect(() => {
         if (!open) return;
